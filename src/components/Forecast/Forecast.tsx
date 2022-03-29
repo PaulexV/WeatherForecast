@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import Conditions from '../Conditions/Conditions';
+import classes from './Forecast.module.css';
 
 const Forecast = () => {
 
-    const [responseObj, setResponseObj] = useState({});
+    let [city, setCity] = useState('');
+    let [unit, setUnit] = useState('metric');
+    let [responseObj, setResponseObj] = useState({});
 
-    function getCurrentForecast() {
+    const uriEncodedCity = encodeURIComponent(city);
+
+    function getCurrentForecast(e: any) {
+        e.preventDefault();
         const options = {
             method: 'GET',
             headers: {
@@ -13,7 +20,7 @@ const Forecast = () => {
             }
         };
 
-        fetch('https://community-open-weather-map.p.rapidapi.com/weather?q=Bordeaux', options)
+        fetch(`https://community-open-weather-map.p.rapidapi.com/weather?&lang=fr&units=${unit}&q=${uriEncodedCity}`, options)
             .then(response => response.json())
             .then(response => setResponseObj(response))
             .catch(err => console.error(err));
@@ -23,9 +30,19 @@ const Forecast = () => {
         <div>
             <h2>Conditions météo actuelles</h2>
             <div>
-                {JSON.stringify(responseObj)}
+                <Conditions responseObj={responseObj} />
             </div>
-            <button onClick={getCurrentForecast}>Get Current Forecast</button>
+            <form onSubmit={getCurrentForecast}>
+                <input
+                    type="text"
+                    placeholder="Enter City"
+                    maxLength={50}
+                    value={city}
+                    className={classes.Input}
+                    onChange={(e) => setCity(e.target.value)}
+                />
+                <button className={classes.Button} type="submit">Afficher les conditions météo</button>
+            </form>
         </div>
     )
 }
