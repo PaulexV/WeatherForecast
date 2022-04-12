@@ -8,10 +8,9 @@ import classes from './Forecast.module.css';
 const Forecast = () => {
 
     let [city, setCity] = useState('');
-    let [unit, setUnit] = useState('metric');
-    let [responseObj, setResponseObj] = useState({});
+ //   let [responseObj, setResponseObj] = useState({});
 
-    const uriEncodedCity = encodeURIComponent(city);
+ /*   const uriEncodedCity = encodeURIComponent(city);
 
     function getCurrentForecast(e: any) {
         e.preventDefault();
@@ -23,19 +22,17 @@ const Forecast = () => {
             }
         };
 
-        fetch(`https://community-open-weather-map.p.rapidapi.com/weather?&lang=fr&units=${unit}&q=${uriEncodedCity}`, options)
+        fetch(`https://community-open-weather-map.p.rapidapi.com/weather?&lang=fr&units=metric&q=${uriEncodedCity}`, options)
             .then(response => response.json())
             .then(response => setResponseObj(response))
             .catch(err => console.error(err));
-    }
+      } */
 
     return (
         <div>
             <h2>Conditions météo actuelles</h2>
-            <div>
-                <Conditions responseObj={responseObj} />
-            </div>
-            <form onSubmit={getCurrentForecast}>
+
+            <form>
                 <input
                     type="text"
                     placeholder="Enter City"
@@ -44,9 +41,11 @@ const Forecast = () => {
                     className={classes.Input}
                     onChange={(e) => setCity(e.target.value)}
                 />
-                
-                <Link className={classes.Link} to="/cards">
-                    <button className={classes.Button} type="submit">Afficher les conditions météo</button>
+                <Link className={classes.Link} to={`/daily/${city}`}>
+                    <button className={classes.Button} type="submit">Météo du jour</button>
+                </Link>
+                <Link className={classes.Link} to={`/weekly/${city}`}>
+                    <button className={classes.Button} type="submit">Météo de la semaine</button>
                 </Link>
             </form>
         </div>

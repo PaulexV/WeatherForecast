@@ -1,11 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Forecast from './components/Forecast/Forecast';
 import Homepage from './components/Pages/Homepage';
-import WeatherInfos from './components/Pages/WeatherInfos';
+import WeeklyWeather from './components/Pages/WeeklyWeather';
+import DailyWeather from './components/Pages/DailyWeather';
 
 function App() {
   return (
@@ -21,7 +21,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Homepage />}/>
-          <Route path="/cards" element={<WeatherInfos />}/>
+          <Route path="/daily" element={<DailyWeather />}/>
+          <Route path="/daily/:city" element={<DailyWeather />}/>
+          <Route path="/weekly" element={<WeeklyWeather />}/>
+          <Route path="/weekly/:city" element={<WeeklyWeather />}/>
         </Routes>
      </BrowserRouter>
     </div>
