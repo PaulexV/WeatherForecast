@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Conditions from '../Conditions/Conditions';
 import classes from './Forecast.module.css';
+
+
 
 const Forecast = () => {
 
@@ -41,7 +44,10 @@ const Forecast = () => {
                     className={classes.Input}
                     onChange={(e) => setCity(e.target.value)}
                 />
-                <button className={classes.Button} type="submit">Afficher les conditions météo</button>
+                
+                <Link className={classes.Link} to="/cards">
+                    <button className={classes.Button} type="submit">Afficher les conditions météo</button>
+                </Link>
             </form>
         </div>
     )

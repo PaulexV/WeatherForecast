@@ -25,3 +25,7 @@
   cursor: pointer;
   margin: 5px auto;
 }
+
+.Link {
+  text-decoration: none;
+}
