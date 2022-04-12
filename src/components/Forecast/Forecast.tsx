@@ -11,12 +11,12 @@ const Forecast = () => {
     const { ref } = usePlacesWidget({
         apiKey: 'AIzaSyC5q6Skc08VkrxISKke2lwN7bRmhRJTZUQ',
         onPlaceSelected: (place) => {
+            console.log(place)
             setCity(place.address_components[0].short_name);
         },
         options: {
             types: ["(cities)"],
             componentRestrictions: { country: "fr" },
-            fields: ['address_components.short_name']
         },
     });
 
@@ -49,7 +49,7 @@ const Forecast = () => {
                     ref={ref}
                     type="text"
                     placeholder="Enter City"
-                    maxLength={50}
+                    maxLength={255}
                     value={city}
                     className={classes.Input}
                     onChange={(e) => setCity(e.target.value)}
