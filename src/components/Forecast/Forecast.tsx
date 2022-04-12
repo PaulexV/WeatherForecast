@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
+import { usePlacesWidget } from 'react-google-autocomplete';
 import Conditions from '../Conditions/Conditions';
 import classes from './Forecast.module.css';
 
 const Forecast = () => {
 
-    let [city, setCity] = useState('');
-    let [unit, setUnit] = useState('metric');
-    let [responseObj, setResponseObj] = useState({});
+    const [city, setCity] = useState('');
+    const [responseObj, setResponseObj] = useState({});
+
+    const { ref } = usePlacesWidget({
+        apiKey: 'AIzaSyC5q6Skc08VkrxISKke2lwN7bRmhRJTZUQ',
+        onPlaceSelected: (place) => {
+            setCity(place.address_components[0].short_name);
+        },
+        options: {
+            types: ["(cities)"],
+            componentRestrictions: { country: "fr" },
+            fields: ['address_components.short_name']
+        },
+    });
 
     const uriEncodedCity = encodeURIComponent(city);
 
@@ -20,7 +32,7 @@ const Forecast = () => {
             }
         };
 
-        fetch(`https://community-open-weather-map.p.rapidapi.com/weather?&lang=fr&units=${unit}&q=${uriEncodedCity}`, options)
+        fetch(`https://community-open-weather-map.p.rapidapi.com/weather?&lang=fr&units=metric&q=${uriEncodedCity}`, options)
             .then(response => response.json())
             .then(response => setResponseObj(response))
             .catch(err => console.error(err));
@@ -34,6 +46,7 @@ const Forecast = () => {
             </div>
             <form onSubmit={getCurrentForecast}>
                 <input
+                    ref={ref}
                     type="text"
                     placeholder="Enter City"
                     maxLength={50}
