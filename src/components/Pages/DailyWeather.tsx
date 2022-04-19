@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { usePlacesWidget } from 'react-google-autocomplete';
+import classes from '../MainPage/MainPage.module.css';
 import Conditions from '../Conditions/Conditions';
-import classes from './Forecast.module.css';
 
-const Forecast = () => {
+const DailyWeather = () => {
 
-    const [city, setCity] = useState('');
     const [responseObj, setResponseObj] = useState({});
+    const [city, setCity] = useState('');
+
+    const uriEncodedCity = encodeURIComponent(city);
 
     const { ref } = usePlacesWidget({
-        apiKey: 'AIzaSyC5q6Skc08VkrxISKke2lwN7bRmhRJTZUQ',
+        apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
         onPlaceSelected: (place) => {
             console.log(place)
             setCity(place.address_components[0].short_name);
@@ -20,15 +22,13 @@ const Forecast = () => {
         },
     });
 
-    const uriEncodedCity = encodeURIComponent(city);
-
     function getCurrentForecast(e: any) {
         e.preventDefault();
         const options = {
             method: 'GET',
             headers: {
                 'X-RapidAPI-Host': 'community-open-weather-map.p.rapidapi.com',
-                'X-RapidAPI-Key': '2166254f35msh011e417047c5104p11ac9fjsn3675a69f1dc6'
+                'X-RapidAPI-Key': process.env.REACT_APP_WEATHER_API_KEY
             }
         };
 
@@ -40,24 +40,24 @@ const Forecast = () => {
 
     return (
         <div>
-            <h2>Conditions météo actuelles</h2>
+            <h1>Météo du jour</h1>
             <div>
                 <Conditions responseObj={responseObj} />
+                <form onSubmit={getCurrentForecast}>
+                    <input
+                        ref={ref}
+                        type="text"
+                        placeholder="Enter City"
+                        maxLength={255}
+                        value={city}
+                        className={classes.Input}
+                        onChange={(e) => setCity(e.target.value)}
+                    />
+                    <button className={classes.Button} type="submit">Afficher les conditions météo</button>
+                </form>
             </div>
-            <form onSubmit={getCurrentForecast}>
-                <input
-                    ref={ref}
-                    type="text"
-                    placeholder="Enter City"
-                    maxLength={255}
-                    value={city}
-                    className={classes.Input}
-                    onChange={(e) => setCity(e.target.value)}
-                />
-                <button className={classes.Button} type="submit">Afficher les conditions météo</button>
-            </form>
         </div>
     )
 }
 
-export default Forecast;
+export default DailyWeather;
