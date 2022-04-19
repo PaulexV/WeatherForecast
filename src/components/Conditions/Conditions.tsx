@@ -5,7 +5,6 @@ const Conditions = (props: any) => {
         <div>
             {props.responseObj.cod === 200 ?
                 <div>
-                    <p><strong>{props.responseObj.name}</strong></p>
                     <p> {Math.round(props.responseObj.main.temp)} degrés,  {props.responseObj.weather[0].description}.</p>
                 </div>
                 : null

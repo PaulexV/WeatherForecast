@@ -1,13 +1,12 @@
 import React from 'react';
-import Forecast from '../Forecast/Forecast';
+import Home from '../MainPage/MainPage';
 
-function Homepage(){
+function Homepage() {
 
-    return(
+    return (
         <main>
-            <Forecast />
+            <Home />
         </main>
-
     )
 }
 export default Homepage;
