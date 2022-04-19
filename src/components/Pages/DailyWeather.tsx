@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { usePlacesWidget } from 'react-google-autocomplete';
 import classes from '../MainPage/MainPage.module.css';
-import Conditions from '../Conditions/Conditions';
+import DailyConditions from '../Conditions/DailyConditions';
 
 const DailyWeather = () => {
 
@@ -13,7 +13,6 @@ const DailyWeather = () => {
     const { ref } = usePlacesWidget({
         apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
         onPlaceSelected: (place) => {
-            console.log(place)
             setCity(place.address_components[0].short_name);
         },
         options: {
@@ -42,7 +41,7 @@ const DailyWeather = () => {
         <div>
             <h1>Météo du jour</h1>
             <div>
-                <Conditions responseObj={responseObj} />
+                <DailyConditions responseObj={responseObj} />
                 <form onSubmit={getCurrentForecast}>
                     <input
                         ref={ref}
