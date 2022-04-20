@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Conditions from '../Conditions/WeeklyConditions';
+import WeeklyConditions from '../Conditions/WeeklyConditions';
 import { usePlacesWidget } from 'react-google-autocomplete';
 import classes from '../MainPage/MainPage.module.css';
 
@@ -40,7 +40,7 @@ const WeeklyWeather = () => {
     return (
         <div>
             <h1>Météo de la semaine</h1>
-            <Conditions responseObj={responseObj} />
+            <WeeklyConditions responseObj={responseObj} />
             <div>
                 <form onSubmit={getWeeklyForecast}>
                     <input

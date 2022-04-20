@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Home from './components/MainPage/MainPage';
 import Homepage from './components/Pages/Homepage';
 import WeeklyWeather from './components/Pages/WeeklyWeather';
 import DailyWeather from './components/Pages/DailyWeather';
