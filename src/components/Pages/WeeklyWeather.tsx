@@ -40,7 +40,6 @@ const WeeklyWeather = () => {
     return (
         <div>
             <h1>Météo de la semaine</h1>
-            <WeeklyConditions responseObj={responseObj} />
             <div>
                 <form onSubmit={getWeeklyForecast}>
                     <input
@@ -54,6 +53,9 @@ const WeeklyWeather = () => {
                     />
                     <button className={classes.Button} type="submit">Afficher les conditions météo</button>
                 </form>
+            </div>
+            <div>
+                <WeeklyConditions responseObj={responseObj} />
             </div>
         </div>
     )
