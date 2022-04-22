@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Home from './components/MainPage/MainPage';
 import Homepage from './components/Pages/Homepage';
 import WeeklyWeather from './components/Pages/WeeklyWeather';
 import DailyWeather from './components/Pages/DailyWeather';
@@ -14,17 +14,17 @@ function App() {
         <h1>Application Météo React</h1>
       </header>
       <main>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/daily" element={<DailyWeather />} />
+            <Route path="/weekly" element={<WeeklyWeather />} />
+          </Routes>
+        </BrowserRouter>
       </main>
       <footer>
         Website created by Verrier Paul-Alexis & Mezou Nathan
       </footer>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/daily" element={<DailyWeather />} />
-          <Route path="/weekly" element={<WeeklyWeather />} />
-        </Routes>
-      </BrowserRouter>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Conditions from '../Conditions/Conditions';
+import WeeklyConditions from '../Conditions/WeeklyConditions';
 import { usePlacesWidget } from 'react-google-autocomplete';
 import classes from '../MainPage/MainPage.module.css';
 
@@ -7,14 +7,15 @@ const WeeklyWeather = () => {
 
     const [responseObj, setResponseObj] = useState({});
     const [city, setCity] = useState('');
-
-    const uriEncodedCity = encodeURIComponent(city);
+    const [lat, setLat] = useState('');
+    const [lng, setLng] = useState('');
 
     const { ref } = usePlacesWidget({
         apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
         onPlaceSelected: (place) => {
-            console.log(place)
             setCity(place.address_components[0].short_name);
+            setLat(place.geometry.location.lat());
+            setLng(place.geometry.location.lng());
         },
         options: {
             types: ["(cities)"],
@@ -22,17 +23,14 @@ const WeeklyWeather = () => {
         },
     });
 
-    function getWeeklyForecast(e: any) {
+    async function getWeeklyForecast(e: any) {
         e.preventDefault();
         const options = {
             method: 'GET',
-            headers: {
-                'X-RapidAPI-Host': 'community-open-weather-map.p.rapidapi.com',
-                'X-RapidAPI-Key': process.env.REACT_APP_WEATHER_API_KEY
-            }
         };
 
-        fetch(`https://community-open-weather-map.p.rapidapi.com/weather?q=${uriEncodedCity}&lang=fr&units=metric`, options)
+        await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=current,hourly,minutely,alerts&units=metric&appid=${process.env.REACT_APP_OPENWEATHER_API_KEY
+            }`, options)
             .then(response => response.json())
             .then(response => setResponseObj(response))
             .catch(err => console.error(err))
@@ -42,7 +40,6 @@ const WeeklyWeather = () => {
     return (
         <div>
             <h1>Météo de la semaine</h1>
-            <Conditions responseObj={responseObj} />
             <div>
                 <form onSubmit={getWeeklyForecast}>
                     <input
@@ -56,6 +53,9 @@ const WeeklyWeather = () => {
                     />
                     <button className={classes.Button} type="submit">Afficher les conditions météo</button>
                 </form>
+            </div>
+            <div>
+                <WeeklyConditions responseObj={responseObj} />
             </div>
         </div>
     )
