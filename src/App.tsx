@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Homepage from './components/Pages/Homepage';
 import WeeklyWeather from './components/Pages/WeeklyWeather';
 import DailyWeather from './components/Pages/DailyWeather';
+import WeatherNavbar from './components/Navbar/navbar';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <h1>Application Météo React</h1>
       </header>
       <main>
+        <WeatherNavbar />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Homepage />} />
